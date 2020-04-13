@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            init();
+            initAvatar();
+            initVideo();
             videolist = findViewById(R.id.videos);
             make = findViewById(R.id.make);
             make.setOnClickListener(new MakeListener());
@@ -51,8 +52,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //初始化头像路径
-    public String initAvatarPAth() throws InterruptedException {
+    //新开一个线程来显示头像
+    void initAvatar(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initAvatarPAth();
+            }
+        });
+        t.start();
+    }
+
+
+
+    //初始化头像
+    public String initAvatarPAth(){
+        //找头像路径
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -92,33 +107,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t1.start();
-        t1.join();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(avatarPath);
+
+        avatar = findViewById(R.id.avatar);
+        //初始化头像
+        Thread t2  = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    String photoPath = "http://39.107.124.222:8080/avatar/" + avatarPath;
+                    Bitmap photo1 = getBitmap(photoPath);
+                    @Override
+                    public void run() {
+                        avatar.setImageBitmap(photo1);
+                    }
+                });
+            }
+        });
+        t2.start();
+
         return avatarPath;
     }
 
-    public void init() throws InterruptedException {
+    public void initVideo() throws InterruptedException {
         System.out.println("init");
-        avatar = findViewById(R.id.avatar);
-        //初始化头像
-        Thread thread  = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        String photoPath = "http://39.107.124.222:8080/avatar/" + initAvatarPAth();
-                        Bitmap photo1 = getBitmap(photoPath);
-                        @Override
-                        public void run() {
-                            avatar.setImageBitmap(photo1);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
 
         videos = new ArrayList<>();
         Thread t1 = new Thread(new Runnable() {
