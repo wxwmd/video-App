@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.myapplication.activity.MainActivity">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp">
+
+            <ImageView android:layout_width="30dp"
+                                                       android:id="@+id/avatar"
+                                                       android:layout_marginTop="15dp"
+                                                       android:layout_marginLeft="20dp"
+                                                       android:layout_height="30dp"/>
+
+            <android.support.v7.widget.SearchView android:layout_width="150dp"
+                                                  android:id="@+id/search_bar"
+                                                  android:layout_marginTop="15dp"
+                                                  android:layout_marginLeft="50dp"
+                                                  android:layout_height="30dp"></android.support.v7.widget.SearchView>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="80dp">
+
+            <ImageView android:layout_width="60dp"
+                       android:layout_marginTop="10dp"
+                       android:id="@+id/make"
+                       android:layout_marginLeft="40dp"
+                       android:background="@drawable/takephoto"
+                       android:layout_height="60dp"/>
+
+            <ImageView android:layout_width="60dp"
+                       android:layout_marginTop="10dp"
+                       android:id="@+id/watch"
+                       android:layout_marginLeft="60dp"
+                       android:background="@drawable/video"
+                       android:layout_height="60dp"/>
+
+            <ImageView android:layout_width="80dp"
+                       android:layout_marginTop="10dp"
+                       android:id="@+id/myposts"
+                       android:layout_marginLeft="50dp"
+                       android:background="@drawable/post"
+                       android:layout_height="60dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="20dp">
+
+            <TextView android:layout_width="60dp"
+                      android:layout_height="20dp"
+                      android:text="制作视频"
+                      android:layout_marginLeft="40dp"/>
+
+            <TextView android:layout_width="60dp"
+                      android:layout_marginLeft="60dp"
+                      android:text="   推荐"
+                      android:layout_height="20dp"/>
+
+            <TextView android:layout_width="80dp"
+                      android:layout_marginLeft="50dp"
+                      android:text="  我的发布"
+                      android:layout_height="20dp"/>
+
+
+        </LinearLayout>
+
+        <ListView android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:id="@+id/videos"
+                  android:layout_marginTop="10dp"
+                  android:divider="@android:color/transparent"
+                  android:dividerHeight="10dp"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
