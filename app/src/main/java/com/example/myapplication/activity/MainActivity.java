@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView avatar;
     private ImageView make;
     private ImageView watch;
-    private ImageView myposts;
+    private ImageView myindex;
     private String avatarPath;
 
     @Override
@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             make = findViewById(R.id.make);
             make.setOnClickListener(new MakeListener());
             watch = findViewById(R.id.watch);
-            myposts = findViewById(R.id.myposts);
+            myindex = findViewById(R.id.myposts);
+            myindex.setOnClickListener(new PersonalListener());
             videolist.setAdapter(new VideoAdapter());
             videolist.setOnItemClickListener(new VideoListener());
         } catch (InterruptedException e) {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //初始化头像
-    public String initAvatarPAth(){
+    public void initAvatarPAth(){
         //找头像路径
         Thread t1 = new Thread(new Runnable() {
             @Override
@@ -130,10 +131,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t2.start();
-
-        return avatarPath;
     }
 
+    //初始化视频
     public void initVideo() throws InterruptedException {
         System.out.println("init");
 
@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         t1.join();
     }
 
+    //视频list view适配器
     class VideoAdapter extends BaseAdapter{
 
         @Override
@@ -242,18 +243,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Bitmap getBitmap(String s) {
-        Bitmap bitmap = null;
-        try {
-            URL url = new URL(s);
-            bitmap = BitmapFactory.decodeStream(url.openStream());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-
+    //点击跳转播放界面
     class VideoListener implements AdapterView.OnItemClickListener{
 
         @Override
@@ -267,11 +257,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public static Bitmap getBitmap(String s) {
+        Bitmap bitmap = null;
+        try {
+            URL url = new URL(s);
+            bitmap = BitmapFactory.decodeStream(url.openStream());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+
+    //制作视频的监听器
     class MakeListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this,UploadActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    //点击我的主页的监听器
+    class PersonalListener  implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this,PersonalActivity.class);
             startActivity(intent);
         }
     }
